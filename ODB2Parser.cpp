@@ -19,19 +19,19 @@ ODB2Response ODB2Parser::parse( tCAN const *rawResponse )
       case ENGINE_RPM:        //   ((A*256)+B)/4    [RPM]
       {
           int value =  ((rawResponse->data[3] * 256) + rawResponse->data[4]) / 4;
-          ODB2Response response( "CAN_ENGINE_RPM", value, "rpm", pid, rawResponse->data );
+          ODB2Response response( "rpm", value, "rpm", pid, rawResponse->data );
           return response;
       }
       case ENGINE_COOLANT_TEMP:   //  A-40        [degree C]
       {
           int value =  rawResponse->data[3] - 40;
-          ODB2Response response( "CAN_ENGINE_COOLANT_TEMP", value, "degC", pid, rawResponse->data );
+          ODB2Response response( "coolantTemp", value, "degC", pid, rawResponse->data );
           return response;
       }
       case VEHICLE_SPEED:     // A          [km]
       {
           int value =  rawResponse->data[3];
-          ODB2Response response( "CAN_VEHICLE_SPEED", value, "km/h", pid, rawResponse->data );
+          ODB2Response response( "speed", value, "km/h", pid, rawResponse->data );
           return response;
       }
       case MAF_SENSOR:        // ((256*A)+B) / 100  [g/s]
@@ -46,10 +46,35 @@ ODB2Response ODB2Parser::parse( tCAN const *rawResponse )
           ODB2Response response( "CAN_THROTTLE_POSITION", value, "%", pid, rawResponse->data );
           return response;
       }
+      case REL_ACCELERATOR_PEDAL_POS:        
+      {
+          int value = (rawResponse->data[3] * 100) / 255;
+          ODB2Response response( "CAN_REL_ACCELERATOR_PEDAL_POS", value, "%", pid, rawResponse->data );
+          return response;
+      }
+      case ACCELERATOR_PEDAL_POS_D:        
+      {
+          int value = (rawResponse->data[3] * 100) / 255;
+          ODB2Response response( "CAN_ACCELERATOR_PEDAL_POS_D", value, "%", pid, rawResponse->data );
+          return response;
+      }
+
+      case ACCELERATOR_PEDAL_POS_E:        
+      {
+          int value = (rawResponse->data[3] * 100) / 255;
+          ODB2Response response( "CAN_ACCELERATOR_PEDAL_POS_E", value, "%", pid, rawResponse->data );
+          return response;
+      }
+      case ACCELERATOR_PEDAL_POS_F:        
+      {
+          int value = (rawResponse->data[3] * 100) / 255;
+          ODB2Response response( "CAN_ACCELERATOR_PEDAL_POS_D", value, "%", pid, rawResponse->data );
+          return response;
+      }
       case FUEL_LEVEL:        
       {
           int value = (rawResponse->data[3] * 100) / 255;
-          ODB2Response response( "CAN_FUEL_LEVEL", value, "%", pid, rawResponse->data );
+          ODB2Response response( "fuelLevel", value, "%", pid, rawResponse->data );
           return response;
       }
       default:
