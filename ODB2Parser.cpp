@@ -55,7 +55,7 @@ ODB2Response ODB2Parser::parse( tCAN const *rawResponse )
       case ACCELERATOR_PEDAL_POS_D:        
       {
           int value = (rawResponse->data[3] * 100) / 255;
-          ODB2Response response( "CAN_ACCELERATOR_PEDAL_POS_D", value, "%", pid, rawResponse->data );
+          ODB2Response response( "acceleratorAngle", value, "%", pid, rawResponse->data );
           return response;
       }
 
