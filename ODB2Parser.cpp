@@ -30,8 +30,8 @@ ODB2Response ODB2Parser::parse( tCAN const *rawResponse )
       }
       case VEHICLE_SPEED:     // A          [km]
       {
-          int value =  rawResponse->data[3];
-          ODB2Response response( "speed", value, "km/h", pid, rawResponse->data );
+          int value =  rawResponse->data[3] * 0.62137;
+          ODB2Response response( "speed", value, "mph", pid, rawResponse->data );
           return response;
       }
       case MAF_SENSOR:        // ((256*A)+B) / 100  [g/s]
